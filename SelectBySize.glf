@@ -123,13 +123,29 @@ proc SelectByType {type} {
 
     switch -exact $type {
 
-        Database { set ents [pw::Database getAll] }
+        Database { 
+            set sm [pw::Display createSelectionMask -requireDatabase {}]
+            pw::Display getSelectedEntities -selectionmask $sm dbas
+            set ents $dbas(Databases)     
+        }
 
-        Connector { set ents [pw::Grid getAll -type pw::Connector] }
+        Connector {
+            set sm [pw::Display createSelectionMask -requireConnector {}]
+            pw::Display getSelectedEntities -selectionmask $sm cons
+            set ents $cons(Connectors)     
+        }
 
-        Domain { set ents [pw::Grid getAll -type pw::Domain] }
+        Domain {
+            set sm [pw::Display createSelectionMask -requireDomain {}]
+            pw::Display getSelectedEntities -selectionmask $sm doms
+            set ents $doms(Domains)     
+        }
 
-        Block { set ents [pw::Grid getAll -type pw::Block] }
+        Block {
+            set sm [pw::Display createSelectionMask -requireBlock {}]
+            pw::Display getSelectedEntities -selectionmask $sm blks
+            set ents $blks(Blocks)     
+        }
 
     }
 
